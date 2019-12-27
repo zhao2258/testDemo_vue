@@ -13,7 +13,7 @@
                 <a-form-item>
                 <a-input class="form-Input"
                     v-decorator="[
-                    'userName',
+                    'username',
                     { rules: [{ required: true, message: '请输入你的账号!' }] },
                     ]"
                     placeholder="用户名、手机号码或邮箱账号"
@@ -44,9 +44,10 @@
 </template>
 
 <script>
+import { getLogin } from '@/request/api'
 export default {
-  beforeCreate() {
-    this.form = this.$form.createForm(this, { name: 'normal_login' });
+  beforeCreate () {
+    this.form = this.$form.createForm(this, { name: 'normal_login' })
   },
   name: 'HelloWorld',
   data () {
@@ -55,14 +56,30 @@ export default {
     }
   },
   methods: {
-    handleSubmit(e) {
-      e.preventDefault();
+    handleSubmit (e) {
+      e.preventDefault()
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log('Received values of form: ', values);
+          getLogin({                    
+                ...values
+            }).then(res => { 
+                if(res.status == "success"){
+                    this.$notification.success({
+                        message: res.message,
+                        duration:1,
+                      })
+                    localStorage.setItem('sessionId_vue', res.data.sessionId);
+                    this.$router.push('/home') 
+                }  else {
+                    this.$notification.error({
+                        message: res.message,
+                        duration:1,
+                      })
+                }          
+            })
         }
-      });
-    },
+      })
+    }
   }
 }
 </script>
@@ -71,11 +88,11 @@ export default {
 <style scoped>
 .login{
     min-height: 100vh;
-    padding-top: 100px;
-    background-image: url('../../public/background.svg')
+    padding-top: 150px;
+    background-image: url('../../../public/background.svg')
 }
 .form{
-    width: 40%;
+    width: 384px;
     margin: 40px auto;
     text-align: left;
 }
