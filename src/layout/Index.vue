@@ -57,36 +57,54 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
-        <a-icon
-          class="trigger"
-          :type="collapsed ? 'menu-unfold' : 'menu-fold'"
-          @click="()=> collapsed = !collapsed"
-        />
+        <a-menu v-model="current" mode="horizontal">
+            <a-icon
+            class="trigger"
+            :type="collapsed ? 'menu-unfold' : 'menu-fold'"
+            @click="()=> collapsed = !collapsed"
+            />
+            <a-menu-item class="menuItem" key="mail"> <a-icon type="mail" />基础设置 </a-menu-item>
+            <a-menu-item class="menuItem" key="app"> <a-icon type="appstore" />采购管理 </a-menu-item>
+            <a-menu-item class="menuItem" key="mail2"> <a-icon type="mail" />订单管理 </a-menu-item>
+            <a-menu-item class="menuItem" key="app2"> <a-icon type="appstore" />仓库管理 </a-menu-item>
+        </a-menu>
       </a-layout-header>
       <a-layout-content
         :style="{ margin: '24px', padding: '24px', background: '#fff', minHeight: '280px' }"
       >
         Content
+        <InputCom></InputCom>
       </a-layout-content>
     </a-layout>
   </a-layout>
 </template>
 <script>
-  export default {
-    data() {
-      return {
-        collapsed: false,
-      };
-    },
-  };
+    import InputCom from '@/components/InputCom'
+    
+    export default {
+        compoents : {
+            InputCom
+        },
+        data() {
+        return {
+            collapsed: false,
+            current: ['mail'],
+        };
+        },
+    };
 </script>
 <style>
   #components-layout-demo-custom-trigger {
       min-height: 100vh;
   }
   
+  #components-layout-demo-custom-trigger .menuItem {
+      font-size: 18px;
+      margin-bottom: 10px;
+  }
+  
   #components-layout-demo-custom-trigger .trigger {
-    font-size: 18px;
+    font-size: 20px;
     line-height: 64px;
     padding: 0 24px;
     cursor: pointer;

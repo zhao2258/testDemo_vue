@@ -87,6 +87,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .login{
+    text-align: center;
     min-height: 100vh;
     padding-top: 150px;
     background-image: url('../../../public/background.svg')
